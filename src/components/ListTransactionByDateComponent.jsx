@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import KoperasiService from '../services/KoperasiService'
 
-class ListTransactionMemberComponent extends Component {
+class ListTransactionByDateComponent extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            memberId: this.props.match.params.memberId,
+            startdate: this.props.match.params.startdate,
+            enddate: this.props.match.params.enddate,
             transactions: []
         }
     }
 
     componentDidMount(){
-        KoperasiService.getTransactionMember(this.state.memberId).then((res) => {
+    	let data = {startDate: this.state.startdate, endDate: this.state.enddate};
+        KoperasiService.getTransactionByDate(data).then((res) => {
             this.setState({ transactions: res.data.data});
         });
     }
@@ -27,6 +29,7 @@ class ListTransactionMemberComponent extends Component {
 
                             <thead>
                                 <tr>
+                                	<th> Member Name </th>
                                     <th> Tanggal Transaksi</th>
                                     <th> Jenis Transaksi</th>
                                     <th> Total Transaksi</th>
@@ -37,9 +40,10 @@ class ListTransactionMemberComponent extends Component {
                                     this.state.transactions.map(
                                         transaction => 
                                         <tr key = {transaction.transactionMemberKoperasiId}>
-                                             <td> {transaction.transactionDateMemberKoperasi} </td>   
-                                             <td> {transaction.transactionTypeMemberKoperasi}</td>
-                                             <td> {transaction.totalTransactionMemberKoperasi}</td>
+                                             <td> {transaction.memberName} </td>
+                                             <td> {transaction.tanggal} </td>   
+                                             <td> {transaction.jenisTransaksi}</td>
+                                             <td> {transaction.total}</td>
                                         </tr>
                                     )
                                 }
@@ -53,4 +57,4 @@ class ListTransactionMemberComponent extends Component {
     }
 }
 
-export default ListTransactionMemberComponent
+export default ListTransactionByDateComponent

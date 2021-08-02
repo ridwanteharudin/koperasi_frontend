@@ -28,7 +28,11 @@ class CreateMemberComponent extends Component {
 
         
         KoperasiService.createMember(member).then(res =>{
-            this.props.history.push('/');
+            if(res.data.status != "success"){
+                alert(res.data.info.message);
+            }else{
+                this.props.history.push('/');
+            }
         });
     }
     
@@ -53,7 +57,7 @@ class CreateMemberComponent extends Component {
     }
 
     getTitle(){
-        return <h3 className="text-center">Add Member</h3>
+        return <h3 className="text-center">Tambah Anggota</h3>
     }
     render() {
         return (
@@ -68,27 +72,27 @@ class CreateMemberComponent extends Component {
                                 <div className = "card-body">
                                     <form>
                                         <div className = "form-group">
-                                            <label> Member Name: </label>
-                                            <input placeholder="Member Name" name="memberName" className="form-control" 
+                                            <label> Nama: </label>
+                                            <input placeholder="Nama" name="memberName" className="form-control" 
                                                 value={this.state.memberName} onChange={this.changeMemberNameHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> Mobile Phone: </label>
-                                            <input placeholder="Mobile Phone" name="memberMobilePhone" className="form-control" 
+                                            <label> No HP: </label>
+                                            <input placeholder="No HP" name="memberMobilePhone" className="form-control" 
                                                 value={this.state.memberMobilePhone} onChange={this.changeMobilePhoneHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> Address : </label>
-                                            <input placeholder="Address" name="memberAddress" className="form-control" 
+                                            <label> Alamat : </label>
+                                            <input placeholder="Alamat" name="memberAddress" className="form-control" 
                                                 value={this.state.memberAddress} onChange={this.changeMemberAddressHandler}/>
                                         </div>
                                         <div className = "form-group">
-                                            <label> Birth Date : </label>
-                                            <input type="date" placeholder="Birth Date" name="memberAddress" className="form-control" 
+                                            <label> Tanggal Lahir : </label>
+                                            <input type="date" placeholder="Tanggal Lahir" name="memberAddress" className="form-control" 
                                                 value={this.state.memberBirthDate} onChange={this.changeBirthDateHandler}/>
                                         </div>
-                                        <button className="btn btn-success" onClick={this.saveMember}>Save</button>
-                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
+                                        <button className="btn btn-success" onClick={this.saveMember}>Simpan</button>
+                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Batal</button>
                                     </form>
                                 </div>
                             </div>

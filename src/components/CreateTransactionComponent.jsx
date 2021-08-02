@@ -1,16 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component , useState} from 'react'
 import KoperasiService from '../services/KoperasiService';
-var values;
+import { Button, Modal } from 'react-bootstrap';
 
 class CreateTransactionComponent extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             // step 2
             memberId: '',
             tanggal: '',
-            total: '',
+            total: 0,
             jenisTransaksi: '',
             options: []
         }
@@ -37,22 +36,38 @@ class CreateTransactionComponent extends Component {
         if(this.state.jenisTransaksi == 'simpan') {
         	transaction = {memberId: this.state.memberId, tanggalSimpananMember: this.state.tanggal, totalSimpananMember: this.state.total};
 	        KoperasiService.createSimpanan(transaction).then(res =>{
-	            this.props.history.push('/');
+                if(res.data.status != "success"){
+                    alert(res.data.info.message);
+                }else{
+                    this.props.history.push('/');
+                }
 	        });
         }else if(this.state.jenisTransaksi == 'pinjam'){
 			transaction = {memberId: this.state.memberId, tanggalPinjamanMember: this.state.tanggal, totalPinjamanMember: this.state.total};
 	        KoperasiService.createPinjaman(transaction).then(res =>{
-	            this.props.history.push('/');
+                if(res.data.status != "success"){
+                    alert(res.data.info.message);
+                }else{
+                    this.props.history.push('/');
+                }
 	        });
         }else if(this.state.jenisTransaksi == 'bayar'){
         	transaction = {memberId: this.state.memberId, tanggalBayarPinjamanMember: this.state.tanggal, totalBayarPinjamanMember: this.state.total};
 	        KoperasiService.createBayar(transaction).then(res =>{
-	            this.props.history.push('/');
+	            if(res.data.status != "success"){
+                    alert(res.data.info.message);
+                }else{
+                    this.props.history.push('/');
+                }
 	        });
         }else if(this.state.jenisTransaksi == 'tarik'){
         	transaction = {memberId: this.state.memberId, tanggalTarikSimpananMember: this.state.tanggal, totalTarikSimpananMember: this.state.total};
 	        KoperasiService.createTarik(transaction).then(res =>{
-	            this.props.history.push('/');
+	            if(res.data.status != "success"){
+                    alert(res.data.info.message);
+                }else{
+                    this.props.history.push('/');
+                }
 	        });
         }else{
         	this.props.history.push('/');
@@ -81,7 +96,7 @@ class CreateTransactionComponent extends Component {
     }
 
     getTitle(){
-        return <h3 className="text-center">Add Simpanan</h3>
+        return <h3 className="text-center">Tambah Transaksi</h3>
     }
     render() {
         return (
@@ -122,8 +137,8 @@ class CreateTransactionComponent extends Component {
                                             <input placeholder="Total" name="total" className="form-control" 
                                                 value={this.state.total} onChange={this.changeTotalHandler}/>
                                         </div>
-                                        <button className="btn btn-success" onClick={this.saveTransaction}>Save</button>
-                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
+                                        <button className="btn btn-success" onClick={this.saveTransaction}>Simpan</button>
+                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Batal</button>
                                     </form>
                                 </div>
                             </div>

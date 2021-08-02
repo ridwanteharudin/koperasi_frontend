@@ -10,7 +10,12 @@ class KoperasiService {
     }
 
     getTransactionMember(memberId){
-        return axios.get(KOPERASI_MONGO_API_BASE_URL + '/list?memberId=ddb65f1b64f94f57b49530993259ec80');
+        const params = new URLSearchParams([['memberId', memberId]]);
+        return axios.get(KOPERASI_MONGO_API_BASE_URL + '/list', { params });
+    }
+
+    getTransactionByDate(data){
+        return axios.post(KOPERASI_API_BASE_URL + '/transaction/listtransactiondate', data);
     }
 
     createMember(member){

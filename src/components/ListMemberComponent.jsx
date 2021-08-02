@@ -11,6 +11,7 @@ class ListMemberComponent extends Component {
         this.addMember = this.addMember.bind(this);
         this.addSimpanan = this.addSimpanan.bind(this);
         this.viewTransaction = this.viewTransaction.bind(this);
+        this.viewTransactionPeriod = this.viewTransactionPeriod.bind(this);
     }
 
     componentDidMount(){
@@ -27,17 +28,24 @@ class ListMemberComponent extends Component {
         this.props.history.push('/add-simpanan');
     }
 
-    viewTransaction(){
-        this.props.history.push(`/detail-transaction`);
+    viewTransactionPeriod(){
+        this.props.history.push('/filter-date');
+    }
+
+    viewTransaction(memberId){
+        this.props.history.push(`/detail-transaction/${memberId}`);
     }
 
     render() {
         return (
             <div>
+                <br></br>
                  <h2 className="text-center">Daftar Anggota</h2>
+                 <br></br>
                  <div className = "row">
-                    <button className="btn btn-primary" onClick={this.addMember}> Tambah Anggota </button>
-                    <button className="btn btn-primary" onClick={this.addSimpanan}> Tambah Transaksi </button>
+                    <button style={{marginLeft: "10px"}} className="btn btn-primary" onClick={this.addMember}> Tambah Anggota </button>
+                    <button style={{marginLeft: "10px"}} className="btn btn-primary" onClick={this.addSimpanan}> Tambah Transaksi </button>
+                    <button style={{marginLeft: "10px"}} className="btn btn-primary" onClick={this.viewTransactionPeriod}> Lihat Transaksi (Period) </button>
                  </div>
                  <br></br>
                  <div className = "row">
@@ -49,6 +57,8 @@ class ListMemberComponent extends Component {
                                     <th> Tanggal Lahir</th>
                                     <th> No Hp</th>
                                     <th> Alamat </th>
+                                    <th> Total Simpanan </th>
+                                    <th> Total Pinjaman </th>
                                     <th> Action </th>
                                 </tr>
                             </thead>
@@ -61,8 +71,10 @@ class ListMemberComponent extends Component {
                                              <td> {member.memberBirthDate}</td>
                                              <td> {member.memberMobilePhone}</td>
                                              <td> {member.memberAddress}</td>
+                                             <td> {member.totalSimpanan}</td>
+                                             <td> {member.totalPinjaman}</td>
                                              <td>
-                                                 <button style={{marginLeft: "10px"}} onClick={ () => this.viewTransaction()} className="btn btn-info">View </button>
+                                                 <button style={{marginLeft: "10px"}} onClick={ () => this.viewTransaction(member.memberId)} className="btn btn-info">Lihat Transaksi </button>
                                              </td>
                                         </tr>
                                     )
